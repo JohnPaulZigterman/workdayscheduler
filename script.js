@@ -10,9 +10,9 @@ $(function () {
   // useful when saving the description in local storage?
   //
   $('.saveBtn').click(function(){
-    var buttonText = this.parentElement.children[1].value;
+    var buttonText = this.parentElement.id;
     alert(buttonText);
-    localStorage.setItem(this.parentElement.id, this.parentElement.children[1].value)
+    localStorage.setItem(("#" + this.parentElement.id), this.parentElement.children[1].value)
   });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -25,8 +25,15 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   function populateDay () {
-
+    for (let i = 9; i < 18; i++) {
+      var cycle = "#hour-" + i;
+      console.log($(cycle).children('textarea'));
+      if (localStorage.getItem(cycle) != null) {
+        $(cycle).children('textarea').val(localStorage.getItem(cycle));
+      }
+    };
   }
+  
 
   // TODO: Add code to display the current date in the header of the page.
   function runTimer() {
@@ -35,7 +42,7 @@ $(function () {
   }
 
   setInterval(runTimer, 1000);
-  populateDay;
+  populateDay();
 });
 
 
