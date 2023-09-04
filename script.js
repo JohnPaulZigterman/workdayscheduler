@@ -10,8 +10,6 @@ $(function () {
   // useful when saving the description in local storage?
   //
   $('.saveBtn').click(function(){
-    var buttonText = this.parentElement.id;
-    alert(buttonText);
     localStorage.setItem(("#" + this.parentElement.id), this.parentElement.children[1].value)
   });
   // TODO: Add code to apply the past, present, or future class to each time
@@ -20,6 +18,8 @@ $(function () {
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
   //
+
+  
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
@@ -27,9 +27,18 @@ $(function () {
   function populateDay () {
     for (let i = 9; i < 18; i++) {
       var cycle = "#hour-" + i;
-      console.log($(cycle).children('textarea'));
       if (localStorage.getItem(cycle) != null) {
         $(cycle).children('textarea').val(localStorage.getItem(cycle));
+      }
+
+      currentHour = dayjs().format('HH');
+
+      if (currentHour > i) {
+        $(cycle).addClass("past");
+      } else if (currentHour == i) {
+        $(cycle).addClass("present");
+      } else if (currentHour < i) {
+        $(cycle).addClass("future");
       }
     };
   }
